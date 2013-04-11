@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/container" android:orientation="vertical"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:layout_marginTop="25dip"
+	>
+
+	<EditText
+	    android:id="@+id/editText1"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:ems="10"
+	    android:hint="Note Name" >
+
+	    <requestFocus />
+	</EditText>
+
+	<EditText
+	    android:id="@+id/editText2"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:ems="10"
+	    android:hint="Description"
+	    android:inputType="textMultiLine"
+	    android:lines="10" />
+	
+	<LinearLayout 
+	    
+	android:id="@+id/completionButtons" android:orientation="horizontal"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:gravity="center|bottom" android:layout_marginBottom="25dip"
+	>
+
+		<Button
+		    android:id="@+id/bSwitchActivity"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_weight="1"
+		    android:text="Back" />
+	
+		<Button
+		    android:id="@+id/button1"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_weight="1"
+		    android:text="Save" />
+	</LinearLayout>
+	
+</LinearLayout>
