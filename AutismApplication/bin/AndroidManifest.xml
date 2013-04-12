@@ -34,7 +34,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.autismapplication.ViewTask"
+            android:name="com.autismapplication.ViewTaskScreen.ViewTask"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="com.autismapplication.ViewTaskScreen.ViewNoteScreen"
             android:label="@string/app_name" >
         </activity>
         <activity
