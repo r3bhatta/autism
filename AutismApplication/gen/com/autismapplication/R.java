@@ -113,6 +113,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int ImageView06=0x7f0a0028;
         public static final int ImageView07=0x7f0a0027;
         public static final int LinearLayout1=0x7f0a0008;
+        public static final int PicturesContainer=0x7f0a0021;
         public static final int accordion_view=0x7f0a0011;
         public static final int action_settings=0x7f0a002b;
         public static final int bSwitchActivity=0x7f0a000f;
@@ -126,7 +127,6 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int expandableListView1=0x7f0a0005;
         public static final int foldButton=0x7f0a0001;
         public static final int foldText=0x7f0a0002;
-        public static final int horizontalScrollView1=0x7f0a0021;
         public static final int horizontalScrollView2=0x7f0a0026;
         public static final int imageView1=0x7f0a0018;
         public static final int imageView2=0x7f0a002a;
@@ -162,7 +162,8 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int activity_video=0x7f03000a;
         public static final int home_screen_list_row=0x7f03000b;
         public static final int view_note_screen=0x7f03000c;
-        public static final int view_task_screen=0x7f03000d;
+        public static final int view_pictures_screen=0x7f03000d;
+        public static final int view_task_screen=0x7f03000e;
     }
     public static final class menu {
         public static final int all_tasks_collapsable_view=0x7f090000;
