@@ -79,6 +79,10 @@ public class AccordionView extends LinearLayout {
     setOrientation(VERTICAL);
     
   }
+  
+  public View[] getWrappedChildren() {
+	  return this.wrappedChildren;
+  }
 
   public View getChildById(int id) {
     for (int i = 0; i < wrappedChildren.length; i++) {
@@ -99,7 +103,7 @@ public class AccordionView extends LinearLayout {
     container.setLayoutParams(new ListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 0));
     final ViewGroup newParent = (ViewGroup) container.findViewById(sectionContainerParent);
     newParent.addView(children[i]);
-    FontUtils.setCustomFont(container, AccordionView.this.getContext().getAssets());
+    //FontUtils.setCustomFont(container, AccordionView.this.getContext().getAssets());
     if (container.getId() == -1) {
       container.setId(i);
     }
@@ -118,7 +122,7 @@ public class AccordionView extends LinearLayout {
     final View view = inflater.inflate(headerLayoutId, null);
     ((TextView) view.findViewById(headerLabel)).setText(sectionHeaders[position]);
 
-    FontUtils.setCustomFont(view, AccordionView.this.getContext().getAssets());
+    //FontUtils.setCustomFont(view, AccordionView.this.getContext().getAssets());
 
     // -- support for no fold button
     if (headerFoldButton == 0) {
