@@ -3,7 +3,7 @@
 
     <item
         android:drawable="@drawable/header_solid"
-        android:top="10dp"/>
+        android:top="55dp"/>
     <item
         android:bottom="1dp"
         android:drawable="@drawable/header_border"

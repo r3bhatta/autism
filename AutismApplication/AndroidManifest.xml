@@ -20,26 +20,37 @@
         <activity
             android:name="com.autismapplication.SplashScreen"
             android:label="@string/app_name" >
+            <!--  uncomment this
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            -->
         </activity>
         <activity
             android:name="com.autismapplication.HomeScreen"
             android:label="@string/app_name" >
+             <!--  uncomment this
             <intent-filter>
                 <action android:name="android.intent.action.VIEWTASK" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            -->
         </activity>
         <activity
             android:name="com.autismapplication.ViewTask"
             android:label="@string/app_name" >
         </activity>
         <activity
+            
             android:name="com.autismapplication.SingleTaskActivity"
             android:label="@string/title_activity_single_task" >
+            <!--  testing -->
+              <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+             <!--  end testing -->
         </activity>
         <activity
             android:name="com.autismapplication.AllTasksDetailedViewActivity"

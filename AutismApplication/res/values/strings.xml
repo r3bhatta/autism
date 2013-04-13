@@ -38,5 +38,7 @@
         <item>0</item>
     </integer-array>
     
+     <string name="album_name">Independence Maker Pictures</string>
+    
     
 </resources>

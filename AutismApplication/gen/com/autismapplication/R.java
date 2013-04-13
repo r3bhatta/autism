@@ -72,6 +72,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int border_color=0x7f040000;
         public static final int header_border_shadow=0x7f040002;
         public static final int header_color=0x7f040001;
+        public static final int light_grey=0x7f040005;
         public static final int section_color=0x7f040004;
     }
     public static final class dimen {
@@ -87,59 +88,64 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
     public static final class drawable {
         public static final int add=0x7f020000;
         public static final int back=0x7f020001;
-        public static final int down=0x7f020002;
-        public static final int footer_bg=0x7f020003;
-        public static final int footer_border=0x7f020004;
-        public static final int footer_solid=0x7f020005;
-        public static final int header_bg=0x7f020006;
-        public static final int header_border=0x7f020007;
-        public static final int header_solid=0x7f020008;
-        public static final int header_solid_inner=0x7f020009;
-        public static final int header_solid_outer=0x7f02000a;
-        public static final int ic_launcher=0x7f02000b;
-        public static final int section=0x7f02000c;
-        public static final int section_border=0x7f02000d;
-        public static final int section_solid=0x7f02000e;
-        public static final int up=0x7f02000f;
+        public static final int delete=0x7f020002;
+        public static final int down=0x7f020003;
+        public static final int footer_bg=0x7f020004;
+        public static final int footer_border=0x7f020005;
+        public static final int footer_solid=0x7f020006;
+        public static final int header_bg=0x7f020007;
+        public static final int header_border=0x7f020008;
+        public static final int header_solid=0x7f020009;
+        public static final int header_solid_inner=0x7f02000a;
+        public static final int header_solid_outer=0x7f02000b;
+        public static final int ic_launcher=0x7f02000c;
+        public static final int section=0x7f02000d;
+        public static final int section_border=0x7f02000e;
+        public static final int section_solid=0x7f02000f;
+        public static final int up=0x7f020010;
     }
     public static final class id {
-        public static final int ImageView01=0x7f0a0022;
-        public static final int ImageView02=0x7f0a001e;
-        public static final int ImageView03=0x7f0a001d;
-        public static final int ImageView04=0x7f0a001c;
-        public static final int ImageView05=0x7f0a001b;
-        public static final int ImageView06=0x7f0a0021;
-        public static final int ImageView07=0x7f0a0020;
+        public static final int ImageView01=0x7f0a0026;
+        public static final int ImageView02=0x7f0a0022;
+        public static final int ImageView03=0x7f0a0021;
+        public static final int ImageView04=0x7f0a0020;
+        public static final int ImageView05=0x7f0a001f;
+        public static final int ImageView06=0x7f0a0025;
+        public static final int ImageView07=0x7f0a0024;
         public static final int LinearLayout1=0x7f0a0008;
-        public static final int accordion_view=0x7f0a0011;
-        public static final int action_settings=0x7f0a0024;
+        public static final int SaveNote=0x7f0a0010;
+        public static final int TakeMorePictures=0x7f0a0013;
+        public static final int accordion_view=0x7f0a0014;
+        public static final int action_settings=0x7f0a0028;
         public static final int bSwitchActivity=0x7f0a000f;
-        public static final int button1=0x7f0a0010;
         public static final int completionButtons=0x7f0a000e;
         public static final int container=0x7f0a000b;
+        public static final int deletePhotoButton=0x7f0a001d;
         public static final int editText1=0x7f0a000c;
         public static final int editText2=0x7f0a000d;
-        public static final int example_get_by_id=0x7f0a0013;
+        public static final int example_get_by_id=0x7f0a0016;
         public static final int expandableListView1=0x7f0a0005;
         public static final int foldButton=0x7f0a0001;
         public static final int foldText=0x7f0a0002;
-        public static final int horizontalScrollView1=0x7f0a001a;
-        public static final int horizontalScrollView2=0x7f0a001f;
-        public static final int imageView1=0x7f0a0018;
-        public static final int imageView2=0x7f0a0023;
+        public static final int horizontalScrollView1=0x7f0a001e;
+        public static final int horizontalScrollView2=0x7f0a0023;
+        public static final int imageView1=0x7f0a0012;
+        public static final int imageView2=0x7f0a0027;
+        public static final int imagesList=0x7f0a0018;
         public static final int linearLayout1=0x7f0a0006;
         public static final int listView1=0x7f0a0007;
+        public static final int m_scroll=0x7f0a0011;
         public static final int mainlayout=0x7f0a0000;
-        public static final int newContactsButton=0x7f0a0015;
-        public static final int newNotesButton=0x7f0a0012;
-        public static final int newPhotosButton=0x7f0a0014;
+        public static final int newContactsButton=0x7f0a0019;
+        public static final int newNotesButton=0x7f0a0015;
+        public static final int newPhotosButton=0x7f0a0017;
         public static final int new_task_plus_img=0x7f0a0009;
-        public static final int ratingBar1=0x7f0a0016;
+        public static final int ratingBar1=0x7f0a001a;
         public static final int section_content=0x7f0a0003;
-        public static final int seekBar1=0x7f0a0017;
+        public static final int seekBar1=0x7f0a001b;
         public static final int textView1=0x7f0a0004;
         public static final int textView2=0x7f0a000a;
-        public static final int textView3=0x7f0a0019;
+        public static final int textView3=0x7f0a001c;
     }
     public static final class layout {
         public static final int accordion_footer=0x7f030000;
@@ -154,7 +160,8 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int activity_splash_screen=0x7f030009;
         public static final int activity_video=0x7f03000a;
         public static final int home_screen_list_row=0x7f03000b;
-        public static final int view_task_screen=0x7f03000c;
+        public static final int new_task_screen_picture_list_row=0x7f03000c;
+        public static final int view_task_screen=0x7f03000d;
     }
     public static final class menu {
         public static final int all_tasks_collapsable_view=0x7f090000;
@@ -164,6 +171,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
     }
     public static final class string {
         public static final int action_settings=0x7f060001;
+        public static final int album_name=0x7f06000c;
         public static final int app_name=0x7f060000;
         public static final int hello_world=0x7f060002;
         public static final int new_task_button_str=0x7f060006;

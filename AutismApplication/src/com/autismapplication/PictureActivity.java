@@ -1,27 +1,239 @@
 package com.autismapplication;
 
 
+import java.io.File;
+import java.io.IOException;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
+import android.widget.VideoView;
+import java.util.Date;
 import com.animation.ActivitySwitcher;
+
+import com.media.*;
 
 	public class PictureActivity  extends Activity {
 		
+		private static final int ACTION_TAKE_PHOTO_B = 1;
+		private static final int ACTION_TAKE_PHOTO_S = 2;
+		private static final int ACTION_TAKE_VIDEO = 3;
 
-		private static final int CAMERA_REQUEST = 1888; 
-	    private ImageView imageView;
-		public static final int MEDIA_TYPE_IMAGE = 1;
-		public static final int MEDIA_TYPE_VIDEO = 2;
+		private static final String BITMAP_STORAGE_KEY = "viewbitmap";
+		private static final String IMAGEVIEW_VISIBILITY_STORAGE_KEY = "imageviewvisibility";
+		private ImageView mImageView;
+		private Bitmap mImageBitmap;
+
+		private static final String VIDEO_STORAGE_KEY = "viewvideo";
+		private static final String VIDEOVIEW_VISIBILITY_STORAGE_KEY = "videoviewvisibility";
+		private VideoView mVideoView;
+		private Uri mVideoUri;
+
+		private String mCurrentPhotoPath;
+
+		private static final String JPEG_FILE_PREFIX = "IMG_";
+		private static final String JPEG_FILE_SUFFIX = ".jpg";
 		
+		private AlbumStorageDirFactory mAlbumStorageDirFactory = null;
+		
+		ArrayList<String> listOfPictures = new ArrayList<String>();
+		
+		/* Photo album for this application */
+		private String getAlbumName() {
+			return getString(R.string.album_name);
+		}
+		
+		private File getAlbumDir() {
+			File storageDir = null;
+
+			if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
+				
+				storageDir = mAlbumStorageDirFactory.getAlbumStorageDir(getAlbumName());
+
+				if (storageDir != null) {
+					if (! storageDir.mkdirs()) {
+						if (! storageDir.exists()){
+							Log.d("CameraSample", "failed to create directory");
+							return null;
+						}
+					}
+				}
+				
+			} else {
+				Log.v(getString(R.string.app_name), "External storage is not mounted READ/WRITE.");
+			}
+			
+			return storageDir;
+		}
+		
+		private File createImageFile() throws IOException {
+			// Create an image file name
+			String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+			String imageFileName = JPEG_FILE_PREFIX + timeStamp + "_";
+			File albumF = getAlbumDir();
+			File imageF = File.createTempFile(imageFileName, JPEG_FILE_SUFFIX, albumF);
+			return imageF;
+		}
+
+		private File setUpPhotoFile() throws IOException {
+			
+			File f = createImageFile();
+			mCurrentPhotoPath = f.getAbsolutePath();
+			return f;
+		}
+		
+		private String setPic() {
+
+			/* There isn't enough memory to open up more than a couple camera photos */
+			/* So pre-scale the target bitmap into which the file is decoded */
+
+			/* Get the size of the ImageView */
+			int targetW = mImageView.getWidth();
+			int targetH = mImageView.getHeight();
+
+			/* Get the size of the image */
+			BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+			bmOptions.inJustDecodeBounds = true;
+			BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+			int photoW = bmOptions.outWidth;
+			int photoH = bmOptions.outHeight;
+			
+			/* Figure out which way needs to be reduced less */
+			int scaleFactor = 1;
+			if ((targetW > 0) || (targetH > 0)) {
+				scaleFactor = Math.min(photoW/targetW, photoH/targetH);	
+			}
+
+			/* Set bitmap options to scale the image decode target */
+			bmOptions.inJustDecodeBounds = false;
+			bmOptions.inSampleSize = scaleFactor;
+			bmOptions.inPurgeable = true;
+
+			/* Decode the JPEG file into a Bitmap */
+			Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+			
+			/* Associate the Bitmap to the ImageView */
+			mImageView.setImageBitmap(bitmap);
+			//mVideoUri = null;
+			mImageView.setVisibility(View.VISIBLE);
+			//mVideoView.setVisibility(View.INVISIBLE);
+			return mCurrentPhotoPath;
+		}
+
+		
+		private void galleryAddPic() {
+		    Intent mediaScanIntent = new Intent("android.intent.action.MEDIA_SCANNER_SCAN_FILE");
+			File f = new File(mCurrentPhotoPath);
+		    Uri contentUri = Uri.fromFile(f);
+		    mediaScanIntent.setData(contentUri);
+		    this.sendBroadcast(mediaScanIntent);
+		}
+	
+		private void dispatchTakePictureIntent(int actionCode) {
+	
+			Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+	
+			switch(actionCode) {
+			case ACTION_TAKE_PHOTO_B:
+				File f = null;
+				
+				try {
+					f = setUpPhotoFile();
+					mCurrentPhotoPath = f.getAbsolutePath();
+					takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
+				} catch (IOException e) {
+					e.printStackTrace();
+					f = null;
+					mCurrentPhotoPath = null;
+				}
+				break;
+	
+			default:
+				break;			
+			} // switch
+	
+			startActivityForResult(takePictureIntent, actionCode);
+		}
+	
+		private void dispatchTakeVideoIntent() {
+			Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+			startActivityForResult(takeVideoIntent, ACTION_TAKE_VIDEO);
+		}
+	
+		private void handleSmallCameraPhoto(Intent intent) {
+			Bundle extras = intent.getExtras();
+			mImageBitmap = (Bitmap) extras.get("data");
+			mImageView.setImageBitmap(mImageBitmap);
+			mVideoUri = null;
+			mImageView.setVisibility(View.VISIBLE);
+			mVideoView.setVisibility(View.INVISIBLE);
+		}
+	
+		private void handleCameraPhoto() {
+	
+			if (mCurrentPhotoPath != null) {
+				String pictureLocation = setPic();
+				listOfPictures.add(pictureLocation);
+				galleryAddPic();
+				mCurrentPhotoPath = null;
+			}
+		}
+	
+		private void handleCameraVideo(Intent intent) {
+			mVideoUri = intent.getData();
+			mVideoView.setVideoURI(mVideoUri);
+			mImageBitmap = null;
+			mVideoView.setVisibility(View.VISIBLE);
+			mImageView.setVisibility(View.INVISIBLE);
+		}
+		
+		private void switchBackToCreateTask() {
+			// we only animateOut this activity here.
+			// The new activity will animateIn from its onResume() - be sure to implement it.
+			final Intent intent = new Intent(getApplicationContext(), SingleTaskActivity.class);
+			// disable default animation for new intent
+			intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+			ActivitySwitcher.animationOut(findViewById(R.id.container), getWindowManager(), new ActivitySwitcher.AnimationFinishedListener() {
+				@Override
+				public void onAnimationFinished() {
+					
+					/*
+					intent.putExtra("numberOfImages", listOfPictures.size());
+					for(int i =0 ; i < listOfPictures.size() ; i++ ) {
+						intent.putExtra("imageName"+i,listOfPictures.get(i) );	
+					}
+					*/
+					
+					intent.putStringArrayListExtra("namesOfPictures",listOfPictures );
+					startActivity(intent);
+				}
+			});
+		}
+
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
 			setContentView(R.layout.activity_picture);
-			this.imageView = (ImageView)this.findViewById(R.id.imageView1);
-	 /*
+			
 			Button switchActivityBtn = (Button) findViewById(R.id.bSwitchActivity);
 			switchActivityBtn.setOnClickListener(new View.OnClickListener() {
 				@Override
@@ -29,19 +241,33 @@ import com.animation.ActivitySwitcher;
 					switchBackToCreateTask();
 				}
 			});
-			*/
-			 // create Intent to take a picture and return control to the calling application
-		    //Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-		    Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE); 
-		   // fileUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE); // create a file to save the image
-		   // intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri); // set the image file name
-
-		    // start the image capture Intent
-		    startActivityForResult(cameraIntent,CAMERA_REQUEST);
 			
+			Button TakeMorePictures = (Button) findViewById(R.id.TakeMorePictures);
+			TakeMorePictures.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					dispatchTakePictureIntent(ACTION_TAKE_PHOTO_B);
+				}
+			});
+			
+			mImageView = (ImageView) findViewById(R.id.imageView1);
+			mImageBitmap = null;
+			
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO) {
+				mAlbumStorageDirFactory = new FroyoAlbumDirFactory();
+			} else {
+				mAlbumStorageDirFactory = new BaseAlbumDirFactory();
+			}
+			
+			if (isIntentAvailable(this, MediaStore.ACTION_IMAGE_CAPTURE))
+			{
+				dispatchTakePictureIntent(ACTION_TAKE_PHOTO_B);
+				
+			} else {
+				Toast.makeText(getApplicationContext(), "Your device does not support taking pictures",Toast.LENGTH_SHORT).show();
+			}
 		}
 	 
-		
 		@Override
 		protected void onResume() {
 			// animateIn this activity
@@ -49,68 +275,61 @@ import com.animation.ActivitySwitcher;
 			super.onResume();
 		}
 		
-		 protected void onActivityResult(int requestCode, int resultCode, Intent data) {  
-		        
-			 Bitmap photo = null;
-			 if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {  
-		            photo = (Bitmap) data.getExtras().get("data"); 
-		        }  
-		        switchBackToCreateTask(photo);
-		    } 
+		@Override
+		protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+			if (resultCode == RESULT_OK) {
+				handleCameraPhoto();
+			}
+		}
 		
-		private void switchBackToCreateTask(Bitmap photo) {
-			// we only animateOut this activity here.
-			// The new activity will animateIn from its onResume() - be sure to implement it.
-			final Intent intent = new Intent(getApplicationContext(), SingleTaskActivity.class);
-			// disable default animation for new intent
-			intent.putExtra("image", photo);
-			intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-			startActivity(intent);
+		// Some lifecycle callbacks so that the image can survive orientation change
+		@Override
+		protected void onSaveInstanceState(Bundle outState) {
+			outState.putParcelable(BITMAP_STORAGE_KEY, mImageBitmap);
+			//outState.putParcelable(VIDEO_STORAGE_KEY, mVideoUri);
+			outState.putBoolean(IMAGEVIEW_VISIBILITY_STORAGE_KEY, (mImageBitmap != null) );
+			//outState.putBoolean(VIDEOVIEW_VISIBILITY_STORAGE_KEY, (mVideoUri != null) );
+			super.onSaveInstanceState(outState);
+		}	
+
+		@Override
+		protected void onRestoreInstanceState(Bundle savedInstanceState) {
+			super.onRestoreInstanceState(savedInstanceState);
+			mImageBitmap = savedInstanceState.getParcelable(BITMAP_STORAGE_KEY);
+			//mVideoUri = savedInstanceState.getParcelable(VIDEO_STORAGE_KEY);
+			mImageView.setImageBitmap(mImageBitmap);
+			mImageView.setVisibility(
+					savedInstanceState.getBoolean(IMAGEVIEW_VISIBILITY_STORAGE_KEY) ? 
+							ImageView.VISIBLE : ImageView.INVISIBLE
+			);
+			//mVideoView.setVideoURI(mVideoUri);
+			/*
+			mVideoView.setVisibility(
+					savedInstanceState.getBoolean(VIDEOVIEW_VISIBILITY_STORAGE_KEY) ? 
+							ImageView.VISIBLE : ImageView.INVISIBLE
+			);
+			*/
 		}
 
-		/** Create a file Uri for saving an image or video */
-		/*
-		private static Uri getOutputMediaFileUri(int type){
-		      return Uri.fromFile(getOutputMediaFile(type));
+		/**
+		 * Indicates whether the specified action can be used as an intent. This
+		 * method queries the package manager for installed packages that can
+		 * respond to an intent with the specified action. If no suitable package is
+		 * found, this method returns false.
+		 * http://android-developers.blogspot.com/2009/01/can-i-use-this-intent.html
+		 *
+		 * @param context The application's environment.
+		 * @param action The Intent action to check for availability.
+		 *
+		 * @return True if an Intent with the specified action can be sent and
+		 *         responded to, false otherwise.
+		 */
+		public static boolean isIntentAvailable(Context context, String action) {
+			final PackageManager packageManager = context.getPackageManager();
+			final Intent intent = new Intent(action);
+			List<ResolveInfo> list =
+				packageManager.queryIntentActivities(intent,
+						PackageManager.MATCH_DEFAULT_ONLY);
+			return list.size() > 0;
 		}
-		*/
-
-		/** Create a File for saving an image or video */
-		/*
-		private static File getOutputMediaFile(int type){
-		    // To be safe, you should check that the SDCard is mounted
-		    // using Environment.getExternalStorageState() before doing this.
-
-		    File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
-		              Environment.DIRECTORY_PICTURES), "MyCameraApp");
-		    // This location works best if you want the created images to be shared
-		    // between applications and persist after your app has been uninstalled.
-
-		    // Create the storage directory if it does not exist
-		    if (! mediaStorageDir.exists()){
-		        if (! mediaStorageDir.mkdirs()){
-		            Log.d("MyCameraApp", "failed to create directory");
-		            return null;
-		        }
-		    }
-
-		    // Create a media file name
-		    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new java.util.Date(type));
-		    File mediaFile;
-		    if (type == MEDIA_TYPE_IMAGE){
-		        mediaFile = new File(mediaStorageDir.getPath() + File.separator +
-		        "IMG_"+ timeStamp + ".jpg");
-		    } else if(type == MEDIA_TYPE_VIDEO) {
-		        mediaFile = new File(mediaStorageDir.getPath() + File.separator +
-		        "VID_"+ timeStamp + ".mp4");
-		    } else {
-		        return null;
-		    }
-
-		    return mediaFile;
-		}
-		*/
- 
-	
 	}
-	

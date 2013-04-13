@@ -1,24 +1,33 @@
 package com.autismapplication;
 
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.autismapplication.R;
-
 
 import com.animation.ActivitySwitcher;
 import com.widgets.AccordionView;
@@ -26,7 +35,8 @@ import com.widgets.AccordionView;
 
 public class SingleTaskActivity extends Activity {
 	
-	public static List<Bitmap> images ;
+	private LinearLayout picturesList;
+	ArrayList<String> listOfPictureNames= new ArrayList<String>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -77,45 +87,11 @@ public class SingleTaskActivity extends Activity {
     @Override 
     protected void onSaveInstanceState (Bundle savedInstanceState) {
     	super.onSaveInstanceState(savedInstanceState);
-    	//savedInstanceState.putBoolean("MyBoolean", true);
-		//savedInstanceState.putDouble("myDouble", 1.9);
-		//savedInstanceState.putInt("MyInt", 1);
-		//savedInstanceState.putString("MyString", "Welcome back to Android");
-    	/*
-		for(int i = 0 ; i < images.size() ; i++){
-			Bitmap image = images.get(i);
-			savedInstanceState.putParcelable("bitmap" + i, image);
-		}
-		*/
-	   // Context context = getApplicationContext();
-	    //  CharSequence text = "Hello toast!";
-	    //  int duration = Toast.LENGTH_SHORT;
-
-	      //Toast toast = Toast.makeText(context, text, duration);
-	      //toast.show(); 
     }
     
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
       super.onRestoreInstanceState(savedInstanceState);
-      // Restore UI state from the savedInstanceState.
-      // This bundle has also been passed to onCreate.
-      //boolean myBoolean = savedInstanceState.getBoolean("MyBoolean");
-      //double myDouble = savedInstanceState.getDouble("myDouble");
-     // int myInt = savedInstanceState.getInt("MyInt");
-     // String myString = savedInstanceState.getString("MyString");
-      /*
-      for(int i = 0 ; i < images.size() ; i++){
-			Bitmap image = savedInstanceState.getParcelable("bitmap" + i);
-			images.add(image);
-		}
-      */
-    //  Context context = getApplicationContext();
-     // CharSequence text = "Hello toast return!";
-     // int duration = Toast.LENGTH_SHORT;
-
-      //Toast toast = Toast.makeText(context, text, duration);
-      //toast.show(); 
     }
 
 	@Override
@@ -125,15 +101,29 @@ public class SingleTaskActivity extends Activity {
 		super.onResume();
 		Intent data = getIntent();
 		
-		if(data.getParcelableExtra("image")!=null)
-		{
-			Bitmap bitmap = (Bitmap) data.getParcelableExtra("image");
-			AccordionView v = (AccordionView) findViewById(R.id.accordion_view);
-		    LinearLayout ll = (LinearLayout) v.findViewById(R.id.example_get_by_id);
-		    ImageView img = new ImageView(this);
-		    img.setImageBitmap(bitmap);
-		    ll.addView(img);
+		// some images were added in by the user
+		if(data.getStringArrayListExtra("namesOfPictures")!=null) {
+			
+			listOfPictureNames.addAll(data.getStringArrayListExtra("namesOfPictures"));
+			buildPicturesList();
 		}
+		
+		getIntent().removeExtra("namesOfPictures"); 
+	}
+	
+	private void buildPicturesList( ) {
+		
+		picturesList = (LinearLayout) findViewById(R.id.imagesList);
+		picturesList.removeAllViews();
+		String[] numberOfPictures = new String[listOfPictureNames.size()];
+		final PictureArrayAdapterImpl adapter = new PictureArrayAdapterImpl(this,
+				android.R.layout.simple_list_item_1, listOfPictureNames);
+		
+		for (int j = 0; j < adapter.getCount(); j++) {
+			  View item = adapter.getView(j, null, null);
+			  picturesList.addView(item);
+		}
+		
 	}
  
 	private void animatedNoteActivity() {
@@ -179,5 +169,88 @@ public class SingleTaskActivity extends Activity {
 		});
 	}
 	
+	/**
+	 * Our Picture List Adapter
+	 */
+	private class PictureArrayAdapterImpl extends ArrayAdapter<String> {
+
+		HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
+		private final Context mContext;
+		private final List<String> mItems;
+
+		public PictureArrayAdapterImpl(Context context, int textViewResourceId,
+				List<String> objects) {
+			super(context, textViewResourceId, objects);
+			mContext = context;
+			mItems = objects;
+			for (int i = 0; i < objects.size(); ++i) {
+				mIdMap.put(objects.get(i), i);
+			}
+		}
+
+		@Override
+		public long getItemId(int position) {
+			String item = getItem(position);
+			return mIdMap.get(item);
+		}
+
+		@Override
+		public boolean hasStableIds() {
+			return true;
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			View v = convertView;
+			if (v == null) {
+				LayoutInflater vi = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+				v = vi.inflate(R.layout.new_task_screen_picture_list_row, null);
+			}
+			String str = mItems.get(position);
+			if (str != null) {
+				File imageFile = new File(str);
+				// file was saved properly
+				if(imageFile.exists()) {
+					Bitmap myBitmap = BitmapFactory.decodeFile(str);
+					
+					ImageView myImage = (ImageView) v.findViewById(R.id.imageView1);
+					myImage.setImageBitmap(myBitmap);
+					myImage.getLayoutParams().height = 150;
+					myImage.getLayoutParams().width = 150;
+					
+				} else {
+					// give some stock image ?
+				}
+				
+				ImageButton deleteButton = (ImageButton) v.findViewById(R.id.deletePhotoButton);
+				/*set the path to the image it corresponds to as a tag*/
+				deleteButton.setTag(str);
+				deleteButton.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						Toast.makeText(getApplicationContext(), (String)v.getTag() + " deleted from file structure", Toast.LENGTH_SHORT).show();
+						
+						File file = new File((String)v.getTag());
+						if(file.exists())
+						{
+							  file.delete();
+							  sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED,
+							            Uri.parse("file://" +  Environment.getExternalStorageDirectory())));
+							  
+							  for(int j = 0 ; j < listOfPictureNames.size() ; j++) {
+								  if(listOfPictureNames.get(j).equals((String)v.getTag()) ) {
+									  listOfPictureNames.remove(j);
+									  buildPicturesList();
+								  }
+							  }
+							  
+						}
+					}
+				});
+
+			}
+			return v;
+		}
+	}
 
 }
