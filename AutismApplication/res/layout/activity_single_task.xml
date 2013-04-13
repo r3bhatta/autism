@@ -3,7 +3,7 @@
     xmlns:accordion="http://schemas.android.com/apk/res-auto/com.accordion"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/back"
+   android:background="@drawable/back"
     android:orientation="vertical"
     android:id="@+id/container" 
     >
@@ -19,9 +19,10 @@
           android:textSize="30sp" />
 
     <ScrollView
+     android:id="@+id/settingsScrollView"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_marginTop="30dp" 
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
         >
       
         <com.widgets.AccordionView
@@ -52,11 +53,16 @@
 			    android:layout_gravity="right"
 			    android:layout_marginRight="5dip"
 				 />
-                
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Item 1" />
+
+                <LinearLayout
+		            android:id="@+id/notesList"
+		            android:layout_width="match_parent"
+		            android:orientation="vertical"
+		           
+		            android:layout_height="wrap_content"
+			        android:divider="#b5b5b5"
+			        android:dividerHeight="1dp"
+		     	 />
                 
             </LinearLayout>
             
@@ -75,17 +81,12 @@
 			    android:layout_gravity="right"
 			    android:layout_marginRight="5dip"
 			    android:paddingBottom="5dip"
-				 />
-                
-                <!-- 
-	       		<View
-			    android:layout_width="fill_parent"
-			    android:layout_height="1dp"
-			    android:paddingBottom="5dip"
-			    android:background="@color/light_grey"/>
-       		 	-->
-                  
-                 <LinearLayout
+				 /> 	
+				 
+		 
+        
+
+            <LinearLayout
 		            android:id="@+id/imagesList"
 		            android:layout_width="match_parent"
 		            android:orientation="vertical"
@@ -98,47 +99,50 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical" >
                 
-            <ImageButton
-			    android:id="@+id/newContactsButton"
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:src="@drawable/add"
-			    android:layout_gravity="right"
-			    android:background="@null"/> 
-             
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Item 4" />
+	            <ImageButton
+				    android:id="@+id/newContactsButton"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:src="@drawable/add"
+				    android:layout_gravity="right"
+				    android:layout_marginRight="5dip"
+				    android:background="@null"/> 
+	            
+	             <LinearLayout
+			            android:id="@+id/contactsList"
+			            android:layout_width="match_parent"
+			            android:orientation="vertical"
+			            android:layout_height="fill_parent" >
+			   	 </LinearLayout>
             
-             </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical" >
-                
-                <RatingBar
-                    android:id="@+id/ratingBar1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <EditText
-                    android:id="@+id/editText1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <SeekBar
-                    android:id="@+id/seekBar1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Item 4" />
+        	</LinearLayout>
         </com.widgets.AccordionView>
+        
+        
     </ScrollView>
+    
+        <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        >
+        
+        <Button
+            android:id="@+id/addReminders"
+            android:layout_height="42dp"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:text="Add Reminders"
+        />
+     
+        <Button
+            android:id="@+id/saveText"
+            android:layout_height="42dp"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:text="Save Task"
+        />
+    </LinearLayout>
+    
+     	
  
 </LinearLayout>

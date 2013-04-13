@@ -7,21 +7,25 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        
         android:layout_height="wrap_content" >
 
-       		<ImageView
-            android:id="@+id/imageView1"
+       		<TextView
+            android:id="@+id/noteName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/ic_launcher" />
+             android:textColor="#040404"
+	        android:typeface="sans"
+	        android:textSize="15sp"
+	        android:textStyle="bold"
+            android:gravity="center" />
        		
                <ImageButton
-		    android:id="@+id/deletePhotoButton"
+		    android:id="@+id/deleteNoteButton"
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
 		    android:src="@drawable/delete"
+		    
 		    android:layout_gravity="center_vertical|right"
 		    android:background="@null"
 		    />

@@ -25,9 +25,7 @@
     <string-array name="accordion_sections">
         <item>Notes</item>
         <item>Pictures</item>
-        <item>Videos</item>
         <item>Contacts</item>
-        <item>Section E</item>
     </string-array>
 
     <integer-array name="accordion_visibility">
@@ -37,8 +35,5 @@
         <item>0</item>
         <item>0</item>
     </integer-array>
-    
      <string name="album_name">Independence Maker Pictures</string>
-    
-    
 </resources>

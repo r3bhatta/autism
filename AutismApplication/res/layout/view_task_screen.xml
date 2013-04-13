@@ -21,7 +21,7 @@
         android:textSize="30dp" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/truncatedTextView"
         android:layout_width="match_parent"
         android:layout_height="180dp"
         android:text="This task is about cooking eggs. First turn on the stove. Then put the pan on top. Add oil and let heat for 2 mins. In a bowl, crack eggs and add some salt, pepper. Put eggs in pan and cook for 5 mins. "
@@ -29,7 +29,7 @@
         android:textSize="22dp" />
 
     <HorizontalScrollView
-        android:id="@+id/horizontalScrollView1"
+        android:id="@+id/PicturesContainer"
         android:layout_width="match_parent"
         android:layout_height="120dp" >
 

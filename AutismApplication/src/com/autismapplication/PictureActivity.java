@@ -1,6 +1,5 @@
 package com.autismapplication;
 
-
 import java.io.File;
 import java.io.IOException;
 
@@ -139,7 +138,6 @@ import com.media.*;
 			return mCurrentPhotoPath;
 		}
 
-		
 		private void galleryAddPic() {
 		    Intent mediaScanIntent = new Intent("android.intent.action.MEDIA_SCANNER_SCAN_FILE");
 			File f = new File(mCurrentPhotoPath);
@@ -192,7 +190,8 @@ import com.media.*;
 	
 			if (mCurrentPhotoPath != null) {
 				String pictureLocation = setPic();
-				listOfPictures.add(pictureLocation);
+				//listOfPictures.add(pictureLocation);
+				SingleTaskActivity.picturesContainerList.add(pictureLocation);
 				galleryAddPic();
 				mCurrentPhotoPath = null;
 			}
@@ -206,29 +205,6 @@ import com.media.*;
 			mImageView.setVisibility(View.INVISIBLE);
 		}
 		
-		private void switchBackToCreateTask() {
-			// we only animateOut this activity here.
-			// The new activity will animateIn from its onResume() - be sure to implement it.
-			final Intent intent = new Intent(getApplicationContext(), SingleTaskActivity.class);
-			// disable default animation for new intent
-			intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-			ActivitySwitcher.animationOut(findViewById(R.id.container), getWindowManager(), new ActivitySwitcher.AnimationFinishedListener() {
-				@Override
-				public void onAnimationFinished() {
-					
-					/*
-					intent.putExtra("numberOfImages", listOfPictures.size());
-					for(int i =0 ; i < listOfPictures.size() ; i++ ) {
-						intent.putExtra("imageName"+i,listOfPictures.get(i) );	
-					}
-					*/
-					
-					intent.putStringArrayListExtra("namesOfPictures",listOfPictures );
-					startActivity(intent);
-				}
-			});
-		}
-
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
@@ -266,70 +242,45 @@ import com.media.*;
 			} else {
 				Toast.makeText(getApplicationContext(), "Your device does not support taking pictures",Toast.LENGTH_SHORT).show();
 			}
-		}
-	 
-		@Override
-		protected void onResume() {
-			// animateIn this activity
-			ActivitySwitcher.animationIn(findViewById(R.id.container), getWindowManager());
-			super.onResume();
+			
 		}
 		
 		@Override
 		protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-			if (resultCode == RESULT_OK) {
-				handleCameraPhoto();
-			}
+			switch (requestCode) {
+			case ACTION_TAKE_PHOTO_B: {
+				if (resultCode == RESULT_OK) {
+					handleCameraPhoto();
+				}
+				break;
+			} 
+
+	
+			} 
+		}
+
+		
+		private void switchBackToCreateTask() {
+			// we only animateOut this activity here.
+			// The new activity will animateIn from its onResume() - be sure to implement it.
+			final Intent intent = new Intent(getApplicationContext(), SingleTaskActivity.class);
+			// disable default animation for new intent
+			intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+			ActivitySwitcher.animationOut(findViewById(R.id.container), getWindowManager(), new ActivitySwitcher.AnimationFinishedListener() {
+				@Override
+				public void onAnimationFinished() {
+					intent.putStringArrayListExtra("namesOfPictures",listOfPictures );
+					startActivity(intent);
+				}
+			});
 		}
 		
-		// Some lifecycle callbacks so that the image can survive orientation change
-		@Override
-		protected void onSaveInstanceState(Bundle outState) {
-			outState.putParcelable(BITMAP_STORAGE_KEY, mImageBitmap);
-			//outState.putParcelable(VIDEO_STORAGE_KEY, mVideoUri);
-			outState.putBoolean(IMAGEVIEW_VISIBILITY_STORAGE_KEY, (mImageBitmap != null) );
-			//outState.putBoolean(VIDEOVIEW_VISIBILITY_STORAGE_KEY, (mVideoUri != null) );
-			super.onSaveInstanceState(outState);
-		}	
-
-		@Override
-		protected void onRestoreInstanceState(Bundle savedInstanceState) {
-			super.onRestoreInstanceState(savedInstanceState);
-			mImageBitmap = savedInstanceState.getParcelable(BITMAP_STORAGE_KEY);
-			//mVideoUri = savedInstanceState.getParcelable(VIDEO_STORAGE_KEY);
-			mImageView.setImageBitmap(mImageBitmap);
-			mImageView.setVisibility(
-					savedInstanceState.getBoolean(IMAGEVIEW_VISIBILITY_STORAGE_KEY) ? 
-							ImageView.VISIBLE : ImageView.INVISIBLE
-			);
-			//mVideoView.setVideoURI(mVideoUri);
-			/*
-			mVideoView.setVisibility(
-					savedInstanceState.getBoolean(VIDEOVIEW_VISIBILITY_STORAGE_KEY) ? 
-							ImageView.VISIBLE : ImageView.INVISIBLE
-			);
-			*/
-		}
-
-		/**
-		 * Indicates whether the specified action can be used as an intent. This
-		 * method queries the package manager for installed packages that can
-		 * respond to an intent with the specified action. If no suitable package is
-		 * found, this method returns false.
-		 * http://android-developers.blogspot.com/2009/01/can-i-use-this-intent.html
-		 *
-		 * @param context The application's environment.
-		 * @param action The Intent action to check for availability.
-		 *
-		 * @return True if an Intent with the specified action can be sent and
-		 *         responded to, false otherwise.
-		 */
 		public static boolean isIntentAvailable(Context context, String action) {
-			final PackageManager packageManager = context.getPackageManager();
-			final Intent intent = new Intent(action);
-			List<ResolveInfo> list =
-				packageManager.queryIntentActivities(intent,
-						PackageManager.MATCH_DEFAULT_ONLY);
-			return list.size() > 0;
+		    final PackageManager packageManager = context.getPackageManager();
+		    final Intent intent = new Intent(action);
+		    List<ResolveInfo> list =
+		            packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+		    return list.size() > 0;
 		}
-	}
+
+}
