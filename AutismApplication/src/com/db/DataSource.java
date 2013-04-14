@@ -69,14 +69,7 @@ public class DataSource {
 		final ContentValues values = new ContentValues();
 		values.put(TaskData.NAME, name);
 
-		runRunnable(new Runnable() {
-			@Override
-			public void run() {
-				synchronized (dataBaseSync) {
-					database.insert(TaskData.TABLE_NAME, null, values);
-				}
-			}
-		});
+		database.insert(TaskData.TABLE_NAME, null, values);
 	}
 
 	public void createContactData(long task_id, String uri) {
@@ -106,14 +99,8 @@ public class DataSource {
 		values.put(ReminderData.INTERVAL, interval);
 		values.put(ReminderData.LOCATION, location);
 
-		runRunnable(new Runnable() {
-			@Override
-			public void run() {
-				synchronized (dataBaseSync) {
-					database.insert(ReminderData.TABLE_NAME, null, values);
-				}
-			}
-		});
+		database.insert(ReminderData.TABLE_NAME, null, values);
+		
 	}
 
 	public void createPhotoData(long task_id, String path) {
@@ -154,16 +141,10 @@ public class DataSource {
 	public void deleteData(final Data data) {
 		final long id = data.getId();
 
-		runRunnable(new Runnable() {
-			@Override
-			public void run() {
-				synchronized (dataBaseSync) {
-					database.delete(
-					/* tableName */data.getTableName(),
-					/* where */DBHelper.PK_ID_COL_NAME + " = " + id, null);
-				}
-			}
-		});
+		database.delete(
+				/* tableName */data.getTableName(),
+				/* where */DBHelper.PK_ID_COL_NAME + " = " + id, null);
+		
 	}
 
 	/**
