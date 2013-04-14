@@ -1,7 +1,5 @@
 package com.db;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -96,24 +94,15 @@ public class DataSource {
 		});
 	}
 
-	public void createReminderData(long task_id, String date, long interval,
+	public void createReminderData(long task_id, Date date, long interval,
 			String location) {
 
 		final ContentValues values = new ContentValues();
 		values.put(ReminderData.FK, task_id);
 
-		// assuming date format is dd-MM-yyy
-		SimpleDateFormat parser = new SimpleDateFormat("dd-MM-yyyy");
-		Date dateObj;
-		long time;
-		try {
-			dateObj = parser.parse(date);
-			time = dateObj.getTime() / 1000;
-			values.put(ReminderData.DATE, time);
-		} catch (ParseException e) {
-			System.out.println("ERROR: parsing date format");
-		}
-
+		long time = date.getTime() / 1000;
+		values.put(ReminderData.DATE, time);
+		
 		values.put(ReminderData.INTERVAL, interval);
 		values.put(ReminderData.LOCATION, location);
 
@@ -349,4 +338,130 @@ public class DataSource {
 		data.setDesc(cursor.getString(3));
 		return data;
 	}
+	
+	
+	/** Query Table for row by ID */
+	
+	public List<TaskData> queryTaskDataByPk(long id) {
+		List<TaskData> allData = new ArrayList<TaskData>();
+
+		// gets everything from table into cursor
+		Cursor cursor = database.query(
+		/* tableName */TaskData.TABLE_NAME,
+		/* columnNames */TaskData.allColumns,
+		/* where */DBHelper.PK_ID_COL_NAME + " = " + id,
+		/* selectionArgs */null,
+		/* groupBy */null,
+		/* having */null,
+		/* orderBy */null);
+
+		cursor.moveToFirst();
+		while (!cursor.isAfterLast()) {
+			TaskData data = cursorToTaskData(cursor);
+			allData.add(data);
+			cursor.moveToNext();
+		}
+
+		cursor.close();
+		return allData;
+	}
+	
+	public List<ContactData> queryContactDataByFk(long fk) {
+		List<ContactData> allData = new ArrayList<ContactData>();
+
+		// gets everything from table into cursor
+		Cursor cursor = database.query(
+		/* tableName */ContactData.TABLE_NAME,
+		/* columnNames */ContactData.allColumns,
+		/* where */ContactData.FK + " = " + fk,
+		/* selectionArgs */null,
+		/* groupBy */null,
+		/* having */null,
+		/* orderBy */null);
+
+		cursor.moveToFirst();
+		while (!cursor.isAfterLast()) {
+			ContactData data = cursorToContactData(cursor);
+			allData.add(data);
+			cursor.moveToNext();
+		}
+
+		cursor.close();
+		return allData;
+	}
+
+	public List<ReminderData> queryReminderDataByFk(long fk) {
+		List<ReminderData> allData = new ArrayList<ReminderData>();
+
+		// gets everything from table into cursor
+		Cursor cursor = database.query(
+		/* tableName */ReminderData.TABLE_NAME,
+		/* columnNames */ReminderData.allColumns,
+		/* where */ReminderData.FK + " = " + fk,
+		/* selectionArgs */null,
+		/* groupBy */null,
+		/* having */null,
+		/* orderBy */null);
+
+		cursor.moveToFirst();
+		while (!cursor.isAfterLast()) {
+			ReminderData data = cursorToReminderData(cursor);
+			allData.add(data);
+			cursor.moveToNext();
+		}
+
+		cursor.close();
+		return allData;
+	}
+
+	public List<PhotoData> queryPhotoDataByFk(long fk) {
+		List<PhotoData> allData = new ArrayList<PhotoData>();
+
+		// gets everything from table into cursor
+		Cursor cursor = database.query(
+		/* tableName */PhotoData.TABLE_NAME,
+		/* columnNames */PhotoData.allColumns,
+		/* where */PhotoData.FK + " = " + fk,
+		/* selectionArgs */null,
+		/* groupBy */null,
+		/* having */null,
+		/* orderBy */null);
+
+		cursor.moveToFirst();
+		while (!cursor.isAfterLast()) {
+			PhotoData data = cursorToPhotoData(cursor);
+			allData.add(data);
+			cursor.moveToNext();
+		}
+
+		// If you ever use cursor don't forget to close it Important! memory
+		// leaks
+		cursor.close();
+		return allData;
+	}
+
+	public List<NoteData> queryNoteDataByFk(long fk) {
+		List<NoteData> allData = new ArrayList<NoteData>();
+
+		// gets everything from table into cursor
+		Cursor cursor = database.query(
+		/* tableName */NoteData.TABLE_NAME,
+		/* columnNames */NoteData.allColumns,
+		/* where */NoteData.FK + " = " + fk,
+		/* selectionArgs */null,
+		/* groupBy */null,
+		/* having */null,
+		/* orderBy */null);
+
+		cursor.moveToFirst();
+		while (!cursor.isAfterLast()) {
+			NoteData data = cursorToNoteData(cursor);
+			allData.add(data);
+			cursor.moveToNext();
+		}
+
+		cursor.close();
+		return allData;
+	}
+	
 }
