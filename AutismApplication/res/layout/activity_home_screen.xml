@@ -22,7 +22,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:layout_marginRight="19dp"
-            android:src="@drawable/ic_launcher" />
+            android:src="@drawable/add" />
 
         <TextView
             android:id="@+id/textView1"

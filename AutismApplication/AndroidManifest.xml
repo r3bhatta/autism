@@ -7,10 +7,16 @@
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="17" />
-   <uses-feature android:name="android.hardware.camera" android:required="false" />
-   <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-   <uses-permission android:name="android.permission.RECORD_AUDIO" />
-   <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
    <uses-permission android:name="android.permission.READ_CONTACTS"/>
    <uses-permission android:name="android.permission.CALL_PHONE" />
@@ -24,24 +30,16 @@
             android:name="com.autismapplication.SplashScreen"
             android:label="@string/app_name" >
             <intent-filter>
-                <!--
                 <action android:name="android.intent.action.MAIN" />
-                     
-                un comment this 
-                <category android:name="android.intent.category.LAUNCHER" />
-                -->
+                <category android:name="android.intent.category.LAUNCHER" />      
             </intent-filter>
         </activity>
         <activity
             android:name="com.autismapplication.HomeScreen"
             android:label="@string/app_name" >
             <intent-filter>
-                 <!--
                 <action android:name="android.intent.action.VIEWTASK" />
-               
-                un comment this 
                 <category android:name="android.intent.category.LAUNCHER" />
-                 -->
             </intent-filter>
         </activity>
         <activity
@@ -52,19 +50,12 @@
             android:name="com.autismapplication.ViewTaskScreen.ViewNoteScreen"
             android:label="@string/app_name" >
         </activity>
-         <activity
-            android:name="com.autismapplication.ViewTaskScreen.ViewPicturesScreen"
-            android:label="@string/app_name" >
-        </activity>
+
         <activity
             android:name="com.autismapplication.SingleTaskActivity"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" 
+            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen"
+             
             android:label="@string/title_activity_single_task" >
-                        
-            <intent-filter> 
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />                 
-            </intent-filter>
         </activity>
         <activity
             android:name="com.autismapplication.AllTasksDetailedViewActivity"
@@ -74,6 +65,7 @@
             android:name="com.autismapplication.AllTasksCollapsableViewActivity"
             android:label="@string/title_activity_all_tasks_collapsable_view" >
         </activity>
+
         <activity 
             android:name="com.autismapplication.NewNoteActivity"
             
@@ -88,7 +80,15 @@
             android:name="com.autismapplication.VideoActivity" 
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" 
             android:label="New Video">
+            </activity>
+               <activity
+            android:name="com.autismapplication.CreateRemindersActivity"
+            android:label="@string/title_activity_create_reminders"
+            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen" >
+
         </activity>
+
+       
         <activity 
             android:name="com.autismapplication.NewContactsActivity" 
             android:label="New Contacts">

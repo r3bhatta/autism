@@ -116,6 +116,8 @@ public class NewNoteActivity extends Activity {
 						note.add(noteNameValue);
 						note.add(noteDescriptionValue);
 						SingleTaskActivity.notesContainer.add(note);
+						
+						
 					}
 					
 				}

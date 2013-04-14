@@ -25,6 +25,7 @@ public class VideoActivity  extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_video);
+		
 		//create new Intent
 	    Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
 
@@ -40,8 +41,10 @@ public class VideoActivity  extends Activity {
 	@Override
 	protected void onResume() {
 		// animateIn this activity
+		
 		ActivitySwitcher.animationIn(findViewById(R.id.container), getWindowManager());
 		super.onResume();
+		
 	}
 	
 	private void switchBackToCreateTask() {
@@ -50,12 +53,14 @@ public class VideoActivity  extends Activity {
 		final Intent intent = new Intent(getApplicationContext(), SingleTaskActivity.class);
 		// disable default animation for new intent
 		intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+		
 		ActivitySwitcher.animationOut(findViewById(R.id.container), getWindowManager(), new ActivitySwitcher.AnimationFinishedListener() {
 			@Override
 			public void onAnimationFinished() {
 				startActivity(intent);
 			}
 		});
+		
 	}
 	
 	/** Create a file Uri for saving an image or video */

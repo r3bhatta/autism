@@ -57,9 +57,11 @@ import com.media.*;
 		ArrayList<String> listOfPictures = new ArrayList<String>();
 		
 		/* Photo album for this application */
+		
 		private String getAlbumName() {
 			return getString(R.string.album_name);
 		}
+		
 		
 		private File getAlbumDir() {
 			File storageDir = null;
@@ -78,7 +80,7 @@ import com.media.*;
 				}
 				
 			} else {
-				Log.v(getString(R.string.app_name), "External storage is not mounted READ/WRITE.");
+				//Log.v(getString(R.string.app_name), "External storage is not mounted READ/WRITE.");
 			}
 			
 			return storageDir;
@@ -208,6 +210,7 @@ import com.media.*;
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
+			
 			setContentView(R.layout.activity_picture);
 			
 			Button switchActivityBtn = (Button) findViewById(R.id.bSwitchActivity);
@@ -218,6 +221,7 @@ import com.media.*;
 				}
 			});
 			
+			
 			Button TakeMorePictures = (Button) findViewById(R.id.TakeMorePictures);
 			TakeMorePictures.setOnClickListener(new View.OnClickListener() {
 				@Override
@@ -225,6 +229,7 @@ import com.media.*;
 					dispatchTakePictureIntent(ACTION_TAKE_PHOTO_B);
 				}
 			});
+			
 			
 			mImageView = (ImageView) findViewById(R.id.imageView1);
 			mImageBitmap = null;
@@ -266,6 +271,7 @@ import com.media.*;
 			final Intent intent = new Intent(getApplicationContext(), SingleTaskActivity.class);
 			// disable default animation for new intent
 			intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+			
 			ActivitySwitcher.animationOut(findViewById(R.id.container), getWindowManager(), new ActivitySwitcher.AnimationFinishedListener() {
 				@Override
 				public void onAnimationFinished() {
@@ -273,6 +279,7 @@ import com.media.*;
 					startActivity(intent);
 				}
 			});
+			
 		}
 		
 		public static boolean isIntentAvailable(Context context, String action) {

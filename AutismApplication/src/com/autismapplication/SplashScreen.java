@@ -8,7 +8,7 @@ import android.view.MotionEvent;
 public class SplashScreen extends Activity {
 
 	protected int mSplashTimeoutMs = 3500;
-	private Thread mSplashTread;
+	private Thread mSplashThread;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -18,7 +18,7 @@ public class SplashScreen extends Activity {
 
 		final SplashScreen mSplashScreen = this;
 
-		mSplashTread = new Thread() {
+		mSplashThread = new Thread() {
 			@Override
 			public void run() {
 				try {
@@ -35,14 +35,14 @@ public class SplashScreen extends Activity {
 			}
 		};
 
-		mSplashTread.start();
+		mSplashThread.start();
 	}
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		if (event.getAction() == MotionEvent.ACTION_DOWN) {
-			synchronized (mSplashTread) {
-				mSplashTread.notifyAll();
+			synchronized (mSplashThread) {
+				mSplashThread.notifyAll();
 			}
 		}
 		return true;

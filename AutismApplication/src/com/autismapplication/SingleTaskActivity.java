@@ -104,8 +104,8 @@ public class SingleTaskActivity extends Activity {
 				
 				//switchBackToCreateTask("Save");
 		
-				//Intent intent = new Intent(SingleTaskActivity.this, HomeScreen.class);
-				//SingleTaskActivity.this.startActivity(intent);
+				Intent intent = new Intent(SingleTaskActivity.this, CreateRemindersActivity.class);
+				SingleTaskActivity.this.startActivity(intent);
 			}
 		});
 		

@@ -78,7 +78,7 @@ public class HomeScreen extends Activity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		//getMenuInflater().inflate(R.menu.home_screen, menu);
+		getMenuInflater().inflate(R.menu.home_screen, menu);
 		return true;
 	}
 

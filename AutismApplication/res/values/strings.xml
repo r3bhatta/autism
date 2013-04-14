@@ -9,19 +9,46 @@
     <string name="title_activity_all_tasks_collapsable_view">AllTasksCollapsableViewActivity</string>
     <string name="new_task_button_str">New Task</string>
     <string name="view_all_tasks_button_str">View All</string>
- 	<string name="title_activity_home_screen">HomeScreen</string>
+    <string name="title_activity_home_screen">HomeScreen</string>
     <string name="new_task_large">New Task</string>
     <string name="new_task_name">Task name</string>
     <string name="priority">Priority</string>
+    <string name="add_reminder">Add Reminder</string>
+    <string name="createRemindersHeader">Create Reminders</string>
+    <string name="createReminderToggleLabel">Remind Once</string>
+    <string name="createReminderDate">April 33th, 2837</string>
     
+    <string-array name="create_reminders_toggle_sections">
+        <item>Remind Once</item>
+    </string-array>
     
+    <string-array name="create_reminders_repeat_sections">
+        <item>Remind At Location</item>
+    </string-array>
+    
+    <integer-array name="create_reminders_toggle_visibility">
+        <item>0</item>
+    </integer-array>
+    <integer-array name="create_reminders_toggle_repeat_visibility">
+        <item>0</item>
+    </integer-array>
+    <string-array name="repeat_spinner">
+        <item>None</item>
+        <item>Every Day</item>
+        <item>Every Week</item>
+        <item>Every Month</item>
+    </string-array>
+    <string-array name="location_spinner">
+        <item>414 Wacom Dr</item>
+        <item>321 Apple St</item>
+        <item>435 GOOO St</item>
+    </string-array>
     <string-array name="priority_list">
         <item>No Priority</item>
         <item>Low Priority</item>
         <item>Medium Priority</item>
         <item>High Priority</item>
     </string-array>
-
     <string-array name="accordion_sections">
         <item>Notes</item>
         <item>Pictures</item>
@@ -36,4 +63,6 @@
         <item>0</item>
     </integer-array>
      <string name="album_name">Independence Maker Pictures</string>
+
+    <string name="title_activity_create_reminders">CreateRemindersActivity</string>
 </resources>

@@ -22,9 +22,9 @@ public class ViewPicturesScreen extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.view_pictures_screen);
 		
-//		ActivitySwipeDetector swipeDetector = new ActivitySwipeDetector(this);
-//		LinearLayout baseLayout = (LinearLayout) this.findViewById(R.id.BaseLayout);
-//		baseLayout.setOnTouchListener(swipeDetector);
+		ActivitySwipeDetector swipeDetector = new ActivitySwipeDetector(this);
+		LinearLayout baseLayout = (LinearLayout) this.findViewById(R.id.BaseLayout);
+		baseLayout.setOnTouchListener(swipeDetector);
 		
 		closeButton = (Button) findViewById(R.id.CloseButton);
 		
