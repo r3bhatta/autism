@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.autismapplication.ViewTaskScreen.ViewTask;
+import com.db.Data;
 import com.db.DataSource;
 import com.db.ReminderData;
 import com.db.TaskData;
@@ -53,7 +54,24 @@ public class HomeScreen extends Activity {
 		// actual tasks
 		mDataSource = new DataSource(this);
 		mDataSource.openWritableDB();
-
+		
+		List<TaskData> allTasks = mDataSource.getAllTaskData();
+		
+		for(int i=0; i<allTasks.size(); i++) {
+			mDataSource.deleteData(allTasks.get(i));
+		}
+		
+		mDataSource.createTaskData("Vacume the house");
+		mDataSource.createTaskData("Cook an egg");
+		
+		allTasks = mDataSource.getAllTaskData();
+		
+		long id_vacume = allTasks.get(0).getId();
+		long id_egg = allTasks.get(1).getId();
+		
+		mDataSource.createReminderData(id_vacume, new Date(), 0L, "Canada");
+		mDataSource.createReminderData(id_egg, new Date(), 0L, "US");
+		
 		setup();
 
 		mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
