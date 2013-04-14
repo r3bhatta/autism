@@ -1,10 +1,14 @@
 package com.autismapplication;
 
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 import com.autismapplication.ViewTaskScreen.ViewTask;
+import com.db.DataSource;
+import com.db.ReminderData;
+import com.db.TaskData;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -19,13 +23,18 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class HomeScreen extends Activity {
 
 	private ListView mListView;
 	private ImageView mImageView;
+	private RelativeLayout mRelativeLayoutHeader;
+	private TextView mTitleAllTasks;
+
+	private HomeScreen mHomeScreen;
+	private DataSource mDataSource;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,25 +43,18 @@ public class HomeScreen extends Activity {
 
 		mListView = (ListView) findViewById(R.id.listView1);
 		mImageView = (ImageView) findViewById(R.id.new_task_plus_img);
+		mTitleAllTasks = (TextView) findViewById(R.id.textView1);
 
+		SingleTaskActivity.notesContainer.clear();
+		SingleTaskActivity.contactsContainer.clear();
+		SingleTaskActivity.picturesContainerList.clear();
+		
 		// These are just some example list values these will be replaced by
 		// actual tasks
-		String[] values = new String[] { "Android", "iPhone", "WindowsMobile",
-				"Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
-				"Linux", "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux",
-				"OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux", "OS/2",
-				"Android", "iPhone", "WindowsMobile" };
+		mDataSource = new DataSource(this);
+		mDataSource.openWritableDB();
 
-		final ArrayList<String> list = new ArrayList<String>();
-		for (int i = 0; i < values.length; ++i) {
-			list.add(values[i]);
-		}
-
-		final ArrayAdapterImpl adapter = new ArrayAdapterImpl(this,
-				android.R.layout.simple_list_item_1, list);
-		
-		final HomeScreen mHomeScreen = this;
-		mListView.setAdapter(adapter);
+		setup();
 
 		mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
@@ -70,10 +72,32 @@ public class HomeScreen extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				// here we start the add new task screen
-				Intent intent = new Intent(HomeScreen.this, SingleTaskActivity.class);
-			    HomeScreen.this.startActivity(intent);
+				Intent intent = new Intent(HomeScreen.this,
+						SingleTaskActivity.class);
+				HomeScreen.this.startActivity(intent);
 			}
 		});
+	}
+
+	public void onResume() {
+		super.onResume();
+		setup();
+	}
+
+	private void setup() {
+		List<TaskData> list = mDataSource.getAllTaskData();
+
+		if (list.isEmpty()) {
+			mTitleAllTasks.setText("NO Tasks");
+		} else {
+			mTitleAllTasks.setText("All Tasks");
+		}
+
+		final ArrayAdapterImpl adapter = new ArrayAdapterImpl(this,
+				android.R.layout.simple_list_item_1, list);
+
+		mHomeScreen = this;
+		mListView.setAdapter(adapter);
 	}
 
 	@Override
@@ -85,14 +109,15 @@ public class HomeScreen extends Activity {
 	/**
 	 * Our List Adapter
 	 */
-	private class ArrayAdapterImpl extends ArrayAdapter<String> {
+	private class ArrayAdapterImpl extends ArrayAdapter<TaskData> {
 
-		HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
+		HashMap<TaskData, Integer> mIdMap = new HashMap<TaskData, Integer>();
 		private final Context mContext;
-		private final List<String> mItems;
+		private final List<TaskData> mItems;
 
 		public ArrayAdapterImpl(Context context, int textViewResourceId,
-				List<String> objects) {
+				List<TaskData> objects) {
+
 			super(context, textViewResourceId, objects);
 			mContext = context;
 			mItems = objects;
@@ -103,7 +128,7 @@ public class HomeScreen extends Activity {
 
 		@Override
 		public long getItemId(int position) {
-			String item = getItem(position);
+			TaskData item = getItem(position);
 			return mIdMap.get(item);
 		}
 
@@ -119,22 +144,32 @@ public class HomeScreen extends Activity {
 				LayoutInflater vi = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 				v = vi.inflate(R.layout.home_screen_list_row, null);
 			}
-			String str = mItems.get(position);
-			if (str != null) {
-				TextView tt = (TextView) v.findViewById(R.id.textView1);
-				TextView mt = (TextView) v.findViewById(R.id.textView2);
-				TextView bt = (TextView) v.findViewById(R.id.textView3);
-				
-				if (tt != null) {
-					tt.setText(str + " top text");
-				}
-				if (mt != null) {
-					mt.setText(str + " mid text");
-				}
-				if (bt != null) {
-					bt.setText(str + " bottom text");
-				}
+
+			TaskData taskData = mItems.get(position);
+			String task_name = taskData.getName();
+
+			List<ReminderData> reminders = mDataSource
+					.queryReminderDataByFk(taskData.getId());
+			String reminder_str;
+			if (reminders.isEmpty()) {
+				reminder_str = "Reminder not set";
+			} else {
+				long time = reminders.get(0).getDate();
+				SimpleDateFormat df = new SimpleDateFormat(
+						"MM/dd/yyyy HH:mm:ss a");
+				reminder_str = df.format(new Date(time * 1000));
 			}
+
+			TextView tt = (TextView) v.findViewById(R.id.textView1);
+			TextView bt = (TextView) v.findViewById(R.id.textView3);
+
+			if (tt != null) {
+				tt.setText(task_name);
+			}
+			if (bt != null) {
+				bt.setText(reminder_str);
+			}
+
 			return v;
 		}
 	}

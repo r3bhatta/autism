@@ -216,7 +216,7 @@ public class SingleTaskActivity extends Activity {
 		
 		for (int j = 0; j < adapter.getCount(); j++) {
 		
-			Toast.makeText(getApplicationContext(), "adding contacts in array", Toast.LENGTH_SHORT).show();
+			//Toast.makeText(getApplicationContext(), "adding contacts in array", Toast.LENGTH_SHORT).show();
 			  View item = adapter.getView(j, null, null);
 			  ContactsList.addView(item);
 		}
@@ -331,8 +331,8 @@ public class SingleTaskActivity extends Activity {
 						
 						  for(int j = 0 ; j < notesContainer.size() ; j++) {
 							  
-							  Toast.makeText(getApplicationContext(), notesContainer.get(j).get(0), Toast.LENGTH_SHORT).show();
-							  Toast.makeText(getApplicationContext(), (String)v.getTag(), Toast.LENGTH_SHORT).show();
+							//  Toast.makeText(getApplicationContext(), notesContainer.get(j).get(0), Toast.LENGTH_SHORT).show();
+							//  Toast.makeText(getApplicationContext(), (String)v.getTag(), Toast.LENGTH_SHORT).show();
 							  
 							  if(notesContainer.get(j).get(0).equals((String)v.getTag()) ) {
 								  notesContainer.remove(j);
@@ -387,7 +387,7 @@ public class SingleTaskActivity extends Activity {
 			}
 			
 			String str = mItems.get(position);
-			Toast.makeText(getApplicationContext(), str, Toast.LENGTH_SHORT).show();
+			//Toast.makeText(getApplicationContext(), str, Toast.LENGTH_SHORT).show();
 			if (str != null) {
 				
 				TextView contactName = (TextView) v.findViewById(R.id.contactName);

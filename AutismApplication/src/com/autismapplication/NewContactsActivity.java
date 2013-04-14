@@ -78,7 +78,7 @@ public class NewContactsActivity extends Activity {
 		ActivitySwitcher.animationOut(findViewById(R.id.container), getWindowManager(), new ActivitySwitcher.AnimationFinishedListener() {
 			@Override
 			public void onAnimationFinished() {
-				Toast.makeText(getApplicationContext(), ContactName + "added", Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(), ContactName + " added", Toast.LENGTH_SHORT).show();
 				
 				ArrayList<String> contact = new ArrayList<String>();
 				contact.add(ContactName);
