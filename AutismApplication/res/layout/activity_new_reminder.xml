@@ -87,7 +87,8 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentLeft="true"
                             android:paddingTop="10sp"
-                            android:text="Remind At Location" />
+                            android:layout_alignBaseline="@+id/repeat_spinner"
+                            android:text="Repeat" />
 
                         <Spinner
                             android:id="@+id/repeat_spinner"
@@ -123,9 +124,11 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentLeft="true"
                             android:paddingTop="10sp"
+                            android:layout_alignBaseline="@+id/location_spinner"
                             android:text="414 Wacom Dr" />
 
                         <Spinner
+                            android:id = "@+id/location_spinner"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
@@ -139,11 +142,29 @@
                         android:background="@android:color/darker_gray"
                         android:visibility="visible" />
 
-                    <CheckBox
-                        android:id="@+id/checkbox_leave"
-                        android:layout_width="wrap_content"
+                  	 <RelativeLayout
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:text="When I Leave" />
+                        android:layout_gravity="center"
+                        android:orientation="horizontal"
+                        android:padding="10sp" >
+
+                        <TextView
+                            android:id="@+id/whenILeave"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignBaseline="@+id/checkbox_leave"
+                            android:text="When I leave" />
+
+                        <CheckBox
+                            android:id="@+id/checkbox_leave"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true" />
+                    </RelativeLayout>
+                    
+                                        
 
                     <View
                         android:layout_width="fill_parent"
@@ -151,11 +172,27 @@
                         android:background="@android:color/darker_gray"
                         android:visibility="visible" />
 
-                    <CheckBox
-                        android:id="@+id/checkbox_arrive"
-                        android:layout_width="wrap_content"
+                    <RelativeLayout
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:text="When I Arrive" />
+                        android:layout_gravity="center"
+                        android:orientation="horizontal"
+                        android:padding="10sp" >
+
+                        <TextView
+                            android:id="@+id/whenIArrive"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignBaseline="@+id/checkbox_arrive"
+                            android:text="When I arrive" />
+
+                        <CheckBox
+                            android:id="@+id/checkbox_arrive"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true" />
+                    </RelativeLayout>
 
                     <View
                         android:layout_width="fill_parent"

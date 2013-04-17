@@ -56,13 +56,13 @@ public class DataSource {
      * Creating ***************************************************
      */
 
-    public void createTaskData(String name) {
+    public long createTaskData(String name) {
         // this is just a key value pair
         // key is the column name
         final ContentValues values = new ContentValues();
         values.put(TaskData.NAME, name);
 
-        database.insert(TaskData.TABLE_NAME, null, values);
+        return database.insert(TaskData.TABLE_NAME, null, values);
     }
 
     public void createContactData(long task_id, String uri) {

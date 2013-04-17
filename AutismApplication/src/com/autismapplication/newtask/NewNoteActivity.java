@@ -37,7 +37,6 @@ public class NewNoteActivity extends Activity {
         saveNoteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 switchBackToCreateTask("Save");
             }
         });
@@ -49,25 +48,6 @@ public class NewNoteActivity extends Activity {
         ActivitySwitcher.animationIn(findViewById(R.id.container), getWindowManager());
         super.onResume();
     }
-
-    /*
-     * @Override public void onSaveInstanceState(Bundle savedInstanceState) {
-     * super.onSaveInstanceState(savedInstanceState);
-     * savedInstanceState.putParcelable("notes", (Parcelable)
-     * SingleTaskActivity.notesContainer); /*
-     * savedInstanceState.putBoolean("MyBoolean", true);
-     * savedInstanceState.putDouble("myDouble", 1.9);
-     * savedInstanceState.putInt("MyInt", 1);
-     * savedInstanceState.putString("MyString", "Welcome back to Android"); }
-     * @Override public void onRestoreInstanceState(Bundle savedInstanceState) {
-     * super.onRestoreInstanceState(savedInstanceState); notesContainer =
-     * savedInstanceState.getParcelable("notes"); // Restore UI state from the
-     * savedInstanceState. // This bundle has also been passed to onCreate. /*
-     * boolean myBoolean = savedInstanceState.getBoolean("MyBoolean"); double
-     * myDouble = savedInstanceState.getDouble("myDouble"); int myInt =
-     * savedInstanceState.getInt("MyInt"); String myString =
-     * savedInstanceState.getString("MyString"); }
-     */
 
     private void switchBackToCreateTask(final String action) {
         // we only animateOut this activity here.

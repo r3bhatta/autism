@@ -23,6 +23,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -38,6 +39,7 @@ import com.autismapplication.newtask.NewPictureActivity;
 import com.autismapplication.newtask.NewVideoActivity;
 
 import com.animation.ActivitySwitcher;
+import com.db.DataSource;
 import com.widgets.AccordionView;
 
 public class NewTaskActivity extends Activity {
@@ -51,13 +53,17 @@ public class NewTaskActivity extends Activity {
     ArrayList<String> listOfContactsNames = new ArrayList<String>();
     ArrayList<String> listOfContactsPhones = new ArrayList<String>();
 
+    private DataSource mDataSource;
+
     /* hacked - need to fix with bundles */
     public static ArrayList<ArrayList<String>> notesContainer = new ArrayList<ArrayList<String>>();
 
     public static ArrayList<ArrayList<String>> contactsContainer = new ArrayList<ArrayList<String>>();
-
+    public static ArrayList<Uri> contactsURIContainer = new ArrayList<Uri>();
+        
     public static ArrayList<String> picturesContainerList = new ArrayList<String>();
-
+    /* end of hacks - need to fix with bundles */
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,10 +110,38 @@ public class NewTaskActivity extends Activity {
             public void onClick(View v) {
 
                 // save to DB here
-                // mDataSource.createTaskData("Vacume the house");
+                mDataSource = new DataSource(getApplicationContext());
+                mDataSource.openWritableDB();
+                String taskName = ((EditText) findViewById(R.id.newTaskName)).getText().toString();
+                
+                if(taskName.length() == 0)  
+                    taskName = "Untitled Task";
+                
+                long id = mDataSource.createTaskData(taskName);
 
-                // EditText taskName = (EditText) findViewById(R.id.);
+                // loop through any notes
+                // TODO: make 0 and 1 some sort of descriptive enum
+                for (int i = 0; i < notesContainer.size(); i++) {
+                    ArrayList<String> note = notesContainer.get(0);
+                    mDataSource.createNoteData(id, note.get(0), note.get(1));
+                }
 
+                // and any pictures
+                for (int i = 0; i < picturesContainerList.size(); i++) {
+                    String picturePath = picturesContainerList.get(i);
+                    mDataSource.createPhotoData(id, picturePath);
+                }
+
+                // and any reminders set up for this
+                for (int i = 0; i < contactsURIContainer.size(); i++) {
+                    Uri contactURI = contactsURIContainer.get(0);
+                    mDataSource.createContactData(id, contactURI.toString());
+                }
+                
+                // and a reminder if any was set for this
+                //mDataSource.createReminderData(id, new Date(), 0L, "Canada");
+                
+                
                 Intent intent = new Intent(NewTaskActivity.this, HomeScreenActivity.class);
                 NewTaskActivity.this.startActivity(intent);
 

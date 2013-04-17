@@ -19,8 +19,8 @@
     <string name="createReminderDate">April 33th, 2837</string>
 
     <string-array name="create_reminders_toggle_sections">
-        <item>Remind Once</item>
-        <item>Remind At Location</item>
+        <item>Remind Me On a Day</item>
+        <item>Remind Me At a Location</item>
     </string-array>
 
     <integer-array name="create_reminders_toggle_visibility">

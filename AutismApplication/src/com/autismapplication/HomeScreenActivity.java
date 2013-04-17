@@ -46,6 +46,7 @@ public class HomeScreenActivity extends Activity {
         mImageView = (ImageView) findViewById(R.id.new_task_plus_img);
         mTitleAllTasks = (TextView) findViewById(R.id.textView1);
 
+        /*clear the hacky static containers - needs to go once changed to bundles*/
         NewTaskActivity.notesContainer.clear();
         NewTaskActivity.contactsContainer.clear();
         NewTaskActivity.picturesContainerList.clear();
@@ -55,12 +56,14 @@ public class HomeScreenActivity extends Activity {
         mDataSource = new DataSource(this);
         mDataSource.openWritableDB();
 
+        /*
         List<TaskData> allTasks = mDataSource.getAllTaskData();
 
+        
         for (int i = 0; i < allTasks.size(); i++) {
             mDataSource.deleteData(allTasks.get(i));
         }
-
+        /*
         mDataSource.createTaskData("Vacume the house");
         mDataSource.createTaskData("Cook an egg");
         allTasks =
@@ -70,7 +73,7 @@ public class HomeScreenActivity extends Activity {
         long id_egg = allTasks.get(1).getId();
         mDataSource.createReminderData(id_vacume, new Date(), 0L, "Canada");
         mDataSource.createReminderData(id_egg, new Date(), 0L, "US");
-
+        */
         setup();
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -177,8 +180,8 @@ public class HomeScreenActivity extends Activity {
                 reminder_str = df.format(new Date(time * 1000));
             }
 
-            TextView tt = (TextView) v.findViewById(R.id.textView1);
-            TextView bt = (TextView) v.findViewById(R.id.textView3);
+            TextView tt = (TextView) v.findViewById(R.id.taskName);
+            TextView bt = (TextView) v.findViewById(R.id.reminder);
 
             if (tt != null) {
                 tt.setText(task_name);

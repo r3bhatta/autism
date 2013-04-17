@@ -36,11 +36,12 @@ public class NewContactActivity extends Activity {
     @Override
     public void onActivityResult(int reqCode, int resultCode, Intent data) {
         super.onActivityResult(reqCode, resultCode, data);
+        Uri contactData = null;
         String name = "";
         String no = "";
         try {
             if (resultCode == Activity.RESULT_OK) {
-                Uri contactData = data.getData();
+                contactData = data.getData();
                 Cursor cur = managedQuery(contactData, null, null, null, null);
                 ContentResolver contect_resolver = getContentResolver();
 
@@ -71,7 +72,7 @@ public class NewContactActivity extends Activity {
                 }
                 contect_resolver = null;
                 cur = null;
-                switchBackToCreateTask(name, no);
+                switchBackToCreateTask(contactData,name, no);
             }
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
@@ -82,7 +83,7 @@ public class NewContactActivity extends Activity {
         }
     }
 
-    private void switchBackToCreateTask(final String ContactName, final String ContactPhone) {
+    private void switchBackToCreateTask(final Uri contactData, final String ContactName, final String ContactPhone) {
         // we only animateOut this activity here.
         // The new activity will animateIn from its onResume() - be sure to
         // implement it.
@@ -100,6 +101,7 @@ public class NewContactActivity extends Activity {
                         contact.add(ContactName);
                         contact.add(ContactPhone);
                         NewTaskActivity.contactsContainer.add(contact);
+                        NewTaskActivity.contactsURIContainer.add(contactData);
 
                         startActivity(intent);
                     }
