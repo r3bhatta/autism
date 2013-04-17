@@ -27,7 +27,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.autismapplication.SplashScreen"
+            android:name="com.autismapplication.SplashScreenActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,7 +35,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.autismapplication.HomeScreen"
+            android:name="com.autismapplication.HomeScreenActivity"
             android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen"
             android:label="@string/app_name" >
             <intent-filter>
@@ -44,26 +44,26 @@
             </intent-filter>
         </activity>
       <activity
-            android:name="com.autismapplication.ViewTaskScreen.ViewTask"
+            android:name="com.autismapplication.ViewTaskActivity"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
         </activity>
         <activity
-            android:name="com.autismapplication.ViewTaskScreen.ViewNoteScreen"
+            android:name="com.autismapplication.viewtask.ViewNoteScreen"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="com.autismapplication.ViewTaskScreen.ViewPicturesScreen"
+            android:name="com.autismapplication.viewtask.ViewPicturesScreen"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="com.autismapplication.ViewTaskScreen.ViewPagerFragmentActivity"
+            android:name="com.autismapplication.viewtask.ViewNoteFragmentActivity"
             android:label="@string/app_name"
             >
         </activity>
 
         <activity
-            android:name="com.autismapplication.SingleTaskActivity"
+            android:name="com.autismapplication.NewTaskActivity"
             android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen"
              
             android:label="@string/title_activity_single_task" >
@@ -78,22 +78,22 @@
         </activity>
 
         <activity 
-            android:name="com.autismapplication.NewNoteActivity"
+            android:name="com.autismapplication.newtask.NewNoteActivity"
             
             android:label="New note">
         </activity>
         <activity 
-            android:name="com.autismapplication.PictureActivity"
+            android:name="com.autismapplication.newtask.NewPictureActivity"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"  
             android:label="New Picture">
         </activity>
         <activity 
-            android:name="com.autismapplication.VideoActivity" 
+            android:name="com.autismapplication.newtask.NewVideoActivity" 
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" 
             android:label="New Video">
             </activity>
                <activity
-            android:name="com.autismapplication.CreateRemindersActivity"
+            android:name="com.autismapplication.newtask.NewReminderActivity"
             android:label="@string/title_activity_create_reminders"
             android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen" >
 
@@ -101,7 +101,7 @@
 
        
         <activity 
-            android:name="com.autismapplication.NewContactsActivity" 
+            android:name="com.autismapplication.newtask.NewContactActivity" 
             android:label="New Contacts">
 
         </activity>

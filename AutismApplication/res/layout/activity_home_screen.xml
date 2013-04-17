@@ -5,26 +5,24 @@
     android:layout_height="match_parent"
     android:clickable="true"
     android:orientation="vertical"
-    
-    tools:context=".HomeScreen" >
-    
-    
-          <TextView
+    tools:context=".HomeScreenActivity" >
+
+    <TextView
         android:id="@+id/createReminderHeader"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10sp"
+        android:background="#a60000"
         android:padding="10sp"
         android:text="My Tasks"
-        android:textSize="24sp"
         android:textColor="#ffffff"
-        android:layout_marginBottom="10sp"
-        android:background="#a60000" />
+        android:textSize="24sp" />
 
     <RelativeLayout
         android:id="@+id/relative_all_tasks_layout"
         android:layout_width="match_parent"
-        android:layout_margin="10sp"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_margin="10sp" >
 
         <ImageView
             android:id="@+id/new_task_plus_img"
@@ -43,7 +41,6 @@
             android:layout_centerHorizontal="true"
             android:text="Tasks"
             android:textAppearance="?android:attr/textAppearanceLarge" />
-
     </RelativeLayout>
 
     <ListView
