@@ -16,8 +16,8 @@
     <string name="add_reminder">Add Reminder</string>
     <string name="createRemindersHeader">Create Reminders</string>
     <string name="createReminderToggleLabel">Remind Once</string>
-    <string name="createReminderDate">April 33th, 2837</string>
-
+    <string name="dayReminderHint">"Enter a day here eg 8 April 2013 11:00 PM"</string>
+	<string name="locationReminderHint">"Enter a location here"</string>
     <string-array name="create_reminders_toggle_sections">
         <item>Remind Me On a Day</item>
         <item>Remind Me At a Location</item>

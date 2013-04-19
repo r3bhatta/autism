@@ -30,178 +30,244 @@
         android:layout_marginBottom="70dp"
         android:layout_marginTop="10dp" >
 
-        <RelativeLayout
+        <LinearLayout
+            android:id="@+id/createReminderTogglePane"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent" >
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical" >
 
-            <com.widgets.AccordionView
-                android:id="@+id/createRemindersAccordionView"
+            <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                accordion:header_layout_fold_button_id="@id/foldButton"
-                accordion:header_layout_id="@layout/accordion_header_new_reminder"
-                accordion:header_layout_label_id="@id/foldText"
-                accordion:section_bottom="@layout/accordion_footer"
-                accordion:section_container="@layout/accordion_section"
-                accordion:section_container_parent="@id/section_content"
-                accordion:section_headers="@array/create_reminders_toggle_sections"
-                accordion:section_visibility="@array/create_reminders_toggle_visibility" >
+                android:layout_gravity="center"
+                android:layout_marginLeft="15sp"
+                android:layout_marginRight="15sp"
+                android:background="@drawable/header_bg"
+                android:orientation="horizontal"
+                android:padding="10sp" >
 
-                <LinearLayout
-                    android:id="@+id/createReminderToogglePane"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/remindOnDay"
+                    android:layout_alignParentLeft="true"
+                    android:text="Remind Me On a day" />
+
+                <CheckBox
+                    android:id="@+id/remindOnDay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/enterReminderDaySection"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="15sp"
+                android:layout_marginRight="15sp"
+                android:background="@drawable/section"
+                android:orientation="horizontal"
+                android:padding="10sp"
+                android:visibility="gone" >
+
+                <EditText
+                    android:id="@+id/reminderDate"
+                    style="@android:style/Widget.TextView"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:orientation="vertical" >
+                    android:layout_alignParentLeft="true"
+                    android:background="@null"
+                    android:hint="@string/dayReminderHint"
+                    android:paddingBottom="10sp"
+                    android:paddingTop="10sp" />
+            </RelativeLayout>
 
-                    <LinearLayout
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:orientation="horizontal" >
+            <View
+                android:id="@+id/enterReminderDayLine"
+                android:layout_width="fill_parent"
+                android:layout_height="0.2dp"
+                android:layout_marginLeft="15sp"
+                android:layout_marginRight="15sp"
+                android:background="@android:color/darker_gray"
+                android:visibility="gone" />
 
-                        <TextView
-                            android:id="@+id/createReminderDate"
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:padding="10sp"
-                            android:text="@string/createReminderDate" />
-                    </LinearLayout>
+            <RelativeLayout
+                android:id="@+id/enterReminderDayRepeatSection"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="15sp"
+                android:layout_marginRight="15sp"
+                android:background="@drawable/section"
+                android:orientation="horizontal"
+                android:padding="10sp"
+                android:visibility="gone" >
 
-                    <View
-                        android:layout_width="fill_parent"
-                        android:layout_height="0.2dp"
-                        android:background="@android:color/darker_gray"
-                        android:visibility="visible" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/repeat_spinner"
+                    android:layout_alignParentLeft="true"
+                    android:paddingTop="10sp"
+                    android:text="Repeat" />
 
-                    <RelativeLayout
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:orientation="horizontal"
-                        android:padding="10sp" >
+                <Spinner
+                    android:id="@+id/repeat_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:entries="@array/repeat_spinner" />
+            </RelativeLayout>
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:paddingTop="10sp"
-                            android:layout_alignBaseline="@+id/repeat_spinner"
-                            android:text="Repeat" />
+            <RelativeLayout
+                android:id="@+id/enterReminderDayFooter"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15sp"
+                android:layout_marginRight="15sp"
+                android:background="@drawable/footer_bg"
+                android:minHeight="10dp"
+                android:orientation="horizontal"
+                android:visibility="gone" >
+            </RelativeLayout>
 
-                        <Spinner
-                            android:id="@+id/repeat_spinner"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginRight="0sp"
-                            android:entries="@array/repeat_spinner" />
-                    </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="15sp"
+                android:layout_marginRight="15sp"
+                android:layout_marginTop="10sp"
+                android:background="@drawable/header_bg"
+                android:orientation="horizontal"
+                android:padding="10sp" >
 
-                    <View
-                        android:layout_width="fill_parent"
-                        android:layout_height="0.2dp"
-                        android:background="@android:color/darker_gray"
-                        android:visibility="visible" />
-                </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/remindOnLocation"
+                    android:layout_alignParentLeft="true"
+                    android:text="Remind Me At a Location" />
 
-                <LinearLayout
+                <CheckBox
+                    android:id="@+id/remindOnLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/enterReminderLocationSection"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="15sp"
+                android:layout_marginRight="15sp"
+                android:background="@drawable/section"
+                android:orientation="horizontal"
+                android:padding="10sp"
+                android:visibility="gone" >
+
+                <EditText
+                    android:id="@+id/reminderLocation"
+                    style="@android:style/Widget.TextView"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:orientation="vertical" >
+                    android:layout_alignParentLeft="true"
+                    android:background="@null"
+                    android:hint="@string/locationReminderHint"
+                    android:paddingBottom="10sp"
+                    android:paddingTop="10sp" />
+            </RelativeLayout>
 
-                    <RelativeLayout
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:orientation="horizontal"
-                        android:padding="10sp" >
+            <View
+                android:id="@+id/enterReminderLocationLine1Section"
+                android:layout_width="fill_parent"
+                android:layout_height="0.2dp"
+                android:layout_marginLeft="15sp"
+                android:layout_marginRight="15sp"
+                android:background="@android:color/darker_gray"
+                android:visibility="gone" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:paddingTop="10sp"
-                            android:layout_alignBaseline="@+id/location_spinner"
-                            android:text="414 Wacom Dr" />
+            <RelativeLayout
+                android:id="@+id/enterReminderLocationLeaveSection"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="15sp"
+                android:layout_marginRight="15sp"
+                android:background="@drawable/section"
+                android:orientation="horizontal"
+                android:padding="10sp"
+                android:visibility="gone" >
 
-                        <Spinner
-                            android:id = "@+id/location_spinner"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginRight="0sp"
-                            android:entries="@array/location_spinner" />
-                    </RelativeLayout>
+                <TextView
+                    android:id="@+id/whenILeave"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/checkbox_leave"
+                    android:layout_alignParentLeft="true"
+                    android:text="When I leave" />
 
-                    <View
-                        android:layout_width="fill_parent"
-                        android:layout_height="0.2dp"
-                        android:background="@android:color/darker_gray"
-                        android:visibility="visible" />
+                <CheckBox
+                    android:id="@+id/checkbox_leave"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true" />
+            </RelativeLayout>
 
-                  	 <RelativeLayout
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:orientation="horizontal"
-                        android:padding="10sp" >
+            <View
+                android:id="@+id/enterReminderLocationLine2Section"
+                android:layout_width="fill_parent"
+                android:layout_height="0.2dp"
+                android:layout_marginLeft="15sp"
+                android:layout_marginRight="15sp"
+                android:background="@android:color/darker_gray"
+                android:visibility="gone" />
 
-                        <TextView
-                            android:id="@+id/whenILeave"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:layout_alignBaseline="@+id/checkbox_leave"
-                            android:text="When I leave" />
+            <RelativeLayout
+                android:id="@+id/enterReminderLocationArriveSection"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="15sp"
+                android:layout_marginRight="15sp"
+                android:background="@drawable/section"
+                android:orientation="horizontal"
+                android:padding="10sp"
+                android:visibility="gone" >
 
-                        <CheckBox
-                            android:id="@+id/checkbox_leave"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true" />
-                    </RelativeLayout>
-                    
-                                        
+                <TextView
+                    android:id="@+id/whenIArrive"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/checkbox_arrive"
+                    android:layout_alignParentLeft="true"
+                    android:text="When I arrive" />
 
-                    <View
-                        android:layout_width="fill_parent"
-                        android:layout_height="0.2dp"
-                        android:background="@android:color/darker_gray"
-                        android:visibility="visible" />
+                <CheckBox
+                    android:id="@+id/checkbox_arrive"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true" />
+            </RelativeLayout>
 
-                    <RelativeLayout
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:orientation="horizontal"
-                        android:padding="10sp" >
-
-                        <TextView
-                            android:id="@+id/whenIArrive"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:layout_alignBaseline="@+id/checkbox_arrive"
-                            android:text="When I arrive" />
-
-                        <CheckBox
-                            android:id="@+id/checkbox_arrive"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true" />
-                    </RelativeLayout>
-
-                    <View
-                        android:layout_width="fill_parent"
-                        android:layout_height="0.2dp"
-                        android:background="@android:color/darker_gray"
-                        android:visibility="visible" />
-                </LinearLayout>
-            </com.widgets.AccordionView>
-        </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/enterReminderLocationFooter"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="15sp"
+                android:layout_marginRight="15sp"
+                android:background="@drawable/section"
+                android:orientation="horizontal"
+                android:padding="10sp"
+                android:visibility="gone" >
+            </RelativeLayout>
+        </LinearLayout>
     </ScrollView>
 
     <Button

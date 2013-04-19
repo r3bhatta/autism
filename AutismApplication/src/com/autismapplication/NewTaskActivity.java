@@ -60,10 +60,11 @@ public class NewTaskActivity extends Activity {
 
     public static ArrayList<ArrayList<String>> contactsContainer = new ArrayList<ArrayList<String>>();
     public static ArrayList<Uri> contactsURIContainer = new ArrayList<Uri>();
-        
+
     public static ArrayList<String> picturesContainerList = new ArrayList<String>();
+
     /* end of hacks - need to fix with bundles */
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,10 +114,10 @@ public class NewTaskActivity extends Activity {
                 mDataSource = new DataSource(getApplicationContext());
                 mDataSource.openWritableDB();
                 String taskName = ((EditText) findViewById(R.id.newTaskName)).getText().toString();
-                
-                if(taskName.length() == 0)  
+
+                if (taskName.length() == 0)
                     taskName = "Untitled Task";
-                
+
                 long id = mDataSource.createTaskData(taskName);
 
                 // loop through any notes
@@ -137,11 +138,10 @@ public class NewTaskActivity extends Activity {
                     Uri contactURI = contactsURIContainer.get(0);
                     mDataSource.createContactData(id, contactURI.toString());
                 }
-                
+
                 // and a reminder if any was set for this
-                //mDataSource.createReminderData(id, new Date(), 0L, "Canada");
-                
-                
+                // mDataSource.createReminderData(id, new Date(), 0L, "Canada");
+
                 Intent intent = new Intent(NewTaskActivity.this, HomeScreenActivity.class);
                 NewTaskActivity.this.startActivity(intent);
 
@@ -167,6 +167,19 @@ public class NewTaskActivity extends Activity {
         buildNotesList();
         buildPicturesList();
         buildContactsList();
+
+        if (data.getBooleanExtra("remindOnDay", false) == true) {
+            
+            String day = data.getStringExtra("remindDate");
+            String remindFrequency = data.getStringExtra("remindFrequency");
+        }
+
+        if (data.getBooleanExtra("remindAtLocation", false) == true) {
+            
+            String location = data.getStringExtra("remindLocation");
+            Boolean remindOnArrive = data.getBooleanExtra("remindOnArrive", false);
+            Boolean remindOnLeave = data.getBooleanExtra("remindOnLeave", false);
+        }
 
     }
 
